@@ -1,0 +1,65 @@
+syntax = "proto3";
+package TokenService;
+option go_package ="Project_2/TokenService";
+
+
+message Msg{
+    string body = 1 ;
+}
+
+message ID{
+    string body = 1; 
+}
+
+message Status{
+    string body = 1;
+}
+
+message Domain{
+    string id = 1;
+    string name = 2;
+    uint64 low = 3;
+    uint64 mid =4;
+    uint64 high = 5;
+    uint64 partialValue =6;
+}
+
+message responseForWrite{
+    uint64 returnPartialValue =1 ;
+    string errored = 2;
+}
+
+message responseForRead{
+    uint64 returnFinalValue = 1;
+    string errored = 2;
+}
+message ReplicationDomain{
+    string id = 1;
+    string name = 2;
+    uint64 low = 3;
+    uint64 mid =4;
+    uint64 high = 5;
+    uint64 partialValue =6;
+    uint64 finalValue = 7;
+}
+message ReplicationResponseForWrite{
+    uint64 partialValue =1;
+}
+message ReplicationID{
+    string body = 1; 
+    uint64 finalValue = 2;
+}
+message ReplicationResponseForRead{
+    uint64 finalValue = 1;
+    string errorWhileReturn =2;
+}
+
+service TokenCRUD {
+
+        rpc Create(ID) returns (Status){}
+        rpc Delete(ID) returns (Status){}
+        rpc Write(Domain) returns (responseForWrite){}
+        rpc Read(ID) returns (responseForRead){}
+        rpc ReplicationForWrite(ReplicationDomain) returns (ReplicationResponseForWrite){}
+        rpc ReplicationForRead(ReplicationID) returns (ReplicationResponseForRead){}
+}
